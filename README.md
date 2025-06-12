@@ -57,7 +57,7 @@ Note: upgrade from a previous program version can be done simply by replacing of
 <a name="Configuration"></a>
 ## 5. Configuration
 - GPS sensor: set data rate to 10Hz = 0.1s (or higher if possible without lost of accuracy). Crosscheck carefully names of available GPS sensors and rename, if needed. The application generally expects sensors coordinates, speed and satellites, if supported:
-	- RCGPS-F3x:  "GPS", "GPS Speed", "GPS Sats" (Application ID is 0x5111)
+	- RCGPS-F3x:  "GPS", "GPS Speed", "GPS Sats" (Application ID is 0x5111) with firmware 0.0.3d or newer
  	- SM-Modelbau GPS-Logger 3: "GPS", "GSpd", "GSats" (be careful – for GPS units with firmware v1.31 Ethos will recognize this sensor with Application ID 0x0860 and sets its name as "GPS Satellites". It is needed to delete such sensor and create a new DIY sensor with Physical ID as other Logger sensors and with Application ID 0x0870!)
 	- FrSky GPS ADV:  "GPS", "GPS Speed"
 	- Other GPS: "GPS", "GSpd"
