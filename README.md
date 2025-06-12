@@ -1,4 +1,4 @@
-# GPS F3X Tracker for Ethos Version 1.4 - F3B tasks have not been tested till now!
+# GPS F3X Tracker for Ethos Version 1.5 - F3B tasks have not been tested till now!
 
 ### Installation guide and user manual
 
@@ -38,7 +38,7 @@ This manual describes how to install, configure and use the GPS F3X Tracker.
 ## 3. Known limitations
 - Due to accuracy of GPS sensors (e.g. FrSky GPS ADV has horizontal accuracy approx 2.5m CEP, RCGPS-F3x 1.5 m CEP with SBAS) and telemetry latency the turn signals are not 100% precise, but still give a good F3F-experience. Issue can be worse for F3B speed tasks
 - Sometimes there is a GPS-drift of given start point. In this case the whole course might drift to left or right some meters, because the turn positions are calculated in relation to the start point
-- The application supports GPS coordinates with 7 decimals, Ethos but currently does not support full editing of such numbers, so editing must be done in an external editor
+- The application supports GPS coordinates with 7 decimals to keep format provided by GPS units. Ethos but currently does not support full editing of such numbers, so editing of coordinates in the locations.lua file must be done in an external editor
 - Max 14 fully defined and one "live" event sites are supported
 - Application texts and menus are only in English. Speech announcements are given in language configured in the transmitter
 - Application is resource demanding. There should not be many other widgets/system tools/tasks/sources running on transmitter otherwise accuracy of application can be compromised. It is valid also vice versa, so other applications can be affected by the GPS F3X Tracker
@@ -58,7 +58,7 @@ Note: upgrade from a previous program version can be done simply by replacing of
 ## 5. Configuration
 - GPS sensor: set data rate to 10Hz = 0.1s (or higher if possible without lost of accuracy). Crosscheck carefully names of available GPS sensors and rename, if needed. The application generally expects sensors coordinates, speed and satellites, if supported:
 	- RCGPS-F3x:  "GPS", "GPS Speed", "GPS Sats" (Application ID is 0x5111)
- 	- SM-Modelbau GPS-Logger 3: "GPS", "GSpd", "GSats" (be careful – for unknown reason Ethos can recognize this sensor with Application ID 0x0860 and sets its name as "GPS Satellites". It is needed to delete such sensor and create a new DIY sensor with Physical ID as other Logger sensors and with Application ID 0x0870!)
+ 	- SM-Modelbau GPS-Logger 3: "GPS", "GSpd", "GSats" (be careful – for GPS units with firmware v1.31 Ethos will recognize this sensor with Application ID 0x0860 and sets its name as "GPS Satellites". It is needed to delete such sensor and create a new DIY sensor with Physical ID as other Logger sensors and with Application ID 0x0870!)
 	- FrSky GPS ADV:  "GPS", "GPS Speed"
 	- Other GPS: "GPS", "GSpd"
 
@@ -86,11 +86,11 @@ Note: not needed other telemetry values should be disabled in Ethos to speed up 
 - "GPS F3X Tracker" widget configuration:
 	- Start race switch: any 2-position switch or functional switch, mandatory
 	- Logging: controls logging of event information
+ 	- Flight correction factor management: Source for setting of the Flight correction factor during flight
  	- Flight correction factor: defines value for correction of flight position
 	- Input debug GPS latitude and longitude: used for emulation of GPS input in debug mode  (suggested analog sources elevator and rudder), not mandatory
 
-<img width="393" alt="image" src="https://github.com/user-attachments/assets/330db7ca-1d4c-46b5-9eca-2e95833707b7" />
-
+<img width="392" alt="image" src="https://github.com/user-attachments/assets/55c52fea-8c32-47ae-b0e8-5207a29d9f6b" />
 
 <a name="Locations.lua"></a>
 ## 6. Locations.lua
@@ -142,6 +142,7 @@ The application supports F3F-competition, F3F-training, F3F-debug, F3B-speed and
 - F3B-distance: it measures number of laps made in 4 minutes since entering the competition place from outside via base A toward base B for the fist time 
 
 The actual status is indicated by individual rows in the "GPS F3X Tracker" widget screen:
+- Comp factor:  defines value for correction of flight position, 0 = no correction
 - Comp: "waiting for start...", "started..." - just after switching the "Start race switch" on, "canceled..." - cancellation can be done by switching off/on/off of the "Start race switch", "start climbing..." - during initial event phase (so 30 sec max), "out of course" - plane between bases, "race timer started..." - initial 30 sec expired and plane between bases, "in course..." - plane outside of bases, "timer started..." - initial 30 sec expired and plane  outside of bases
 - Runtime: time used for individual event
 - Course: "center", "leftOutside", "leftInside", "rightOutside", "rightInside" - distance from the center is provided
@@ -149,8 +150,7 @@ The actual status is indicated by individual rows in the "GPS F3X Tracker" widge
 - GPS: actual GPS position
 - Runs: list of last events of the same type with their runtime
 
-<img width="196" alt="image" src="https://github.com/user-attachments/assets/5bb1a9bc-1850-4dd7-9692-8232f4d39911" />
-
+<img width="194" alt="image" src="https://github.com/user-attachments/assets/3776fb41-35f4-4898-bc3e-7f8eeed1ecbd" />
 
 Announcements and sounds: 
 - Beep after switching the "Start race switch" on
@@ -185,7 +185,7 @@ Announcements and sounds:
 - Go to the "GPS F3X Tracker" widget screen
 	- The initial status is indicated by statement "waiting for start..." 
 
-<img width="194" alt="image" src="https://github.com/user-attachments/assets/54a4c5c5-7eb6-44c3-aff7-2e75fa90edbd" />
+<img width="194" alt="image" src="https://github.com/user-attachments/assets/b536919a-1589-4a6b-ac70-20bf087a35c7" />
 
 - Start new event with the "Start race switch"
 
@@ -195,9 +195,12 @@ Logging of flight event information is supported. It should be used only if real
 
 Recording begins when a flight is started by the “Start race switch” and ends when an event is concluded. An initial log row looks e.g. like:
 
-	Start 16:06 Course direction:12.5°, Course difference:0m, luaRamAvailable:1758840B, Correction factor:0.0
+_Start 16:06 Course direction:12.5°, Course difference:0m, luaRamAvailable:1758840B, Correction factor:0.0_
 
 Next rows have format as below, where:
+
+_comp.state, GPS:  latitude, longitude, Dist2home, Dir2home, Course distance, Speed, Sats_
+
 - comp.state: provides information about current flight stage (5 – start overall timer, 10 – waiting for leaving the course, 15 – waiting for entering the course from outside (training mode starts here), 20 – start competition timer, 25 – waiting for plane crossing right base from inside, 27 – waiting for plane crossing left base from inside, 30 – end of event)
 - GPS: gives current position of the plane
 - Dist2home: gives current distance between the plane and home point (center of the course) in meters (negative value means the plane is on the left from the home point, positive value means the plane is on the right)
@@ -206,18 +209,28 @@ Next rows have format as below, where:
 - Speed: speed of flight in m/s
 - Sats: number of visible and used GPS satellites (available only for sensors providing that information)
 
-	comp.state, GPS:  latitude, longitude, Dist2home, Dir2home, Course distance, Speed, Sats
-
 <a name="Flight_position_correction"></a>
 ## 10. Flight position correction
 Due to latency of GPS sensor, telemetry latency and processing latency the turn signals are not 100% precise. The application has implemented basic mechanism aiming to compensate this issue.  The function is controlled via value of item “Flight correction factor” in the "GPS F3X Tracker" widget configuration:
-	- 0: correction is disabled
-	- 0.01 – 0.50: correction is enabled
+- 0: correction is disabled
+- 0.01 – 0.50: correction is enabled
 
 Corrected position depends on a current fight speed and it is calculated as per formula below:
 CorrectedDistance =  ReportedDistance + FlightcorrectionFactor * groundspeed
 
 The best value of the Flight correction factor must be found as it depends on hardware and software conditions. For example the Flight correction factor = 0.1, compensates the overall position inaccuracy related to one delayed report from a GPS sensor set to 10 Hz, so ideally reporting each 0.1s. In a case of speed 100 km/h, compensation is 2.8m, with speed 150 km/s it is 4.2m. The Flight correction factor = 0.5 compensates 5 delayed reports and compensation is 14m respectively 21m for the same speeds.
+
+You can set the Flight correction factor manually or you can set its best value during test flights:
+
+- There is new configuration item of type Source "Flight correction factor management". If it isn’t configured, it is possible to change the configuration item "Flight correction factor" manually, otherwise the item "Flight correction factor" is managed by the configured source
+- Value of the item "Flight correction factor management" must be in range 0-50%, I advise to create a Var, e.g.:
+
+<img width="393" alt="image" src="https://github.com/user-attachments/assets/5b9366b1-de47-44a1-8c0d-a8e72fdd5364" />
+
+- Change of value is in the Tracker accepted only during status "waiting for start...". However value of the source can be changed anytime and the Tracker will accept it when goes again into the status "waiting for start..."!
+- Change of value is announced by voice, be patient as Ethos chains voice messages
+- Last value is stored in the item "Flight correction factor", you can see it in the operation widget
+- After landing configure the item "Flight correction factor management" as empty – in this way you will fix the found best value of the correction factor
 
 <a name="Management_of_course_length_difference"></a>
 ## 11. Management of course length difference
@@ -253,9 +266,11 @@ V1.4:
 - Deleted function for estimation of acceleration in axis Z for sensors without accelerometer 
 - Deleted reading from an altitude sensor and its displaying
 
+V1.5: Implemented management of the flight correction factor during flight
+
 <a name="Developmentplan"></a>
 ## 13. Development plan
-The application hasn't been thoroughly tested so far and it is highly probable there will be necessary to change or enhance some parts. Do not hesitate to comment and come with ideas, preferably via an Issue in the GitHub repository (New issue gpsF3XTracker for Ethos)
+It is probable there will be necessary to change or enhance some parts. Do not hesitate to comment and come with ideas, preferably via an Issue in the GitHub repository (New issue gpsF3XTracker for Ethos)
 
 <a name="License"></a>
 ## 14. License
