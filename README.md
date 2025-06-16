@@ -80,8 +80,8 @@ Note: not needed other telemetry values should be disabled in Ethos to speed up 
 
 	(**) This item is available only for F3F event types, for F3B event types is Base A always on left
 
-<img width="392" alt="image" src="https://github.com/user-attachments/assets/8fa50869-8b8a-4ce5-b253-c9a9d7ae8747" />
-<img width="392" alt="image" src="https://github.com/user-attachments/assets/0caa60f7-a4d8-4a67-ada5-3337ce07bf99" />
+	<img width="392" alt="image" src="https://github.com/user-attachments/assets/8fa50869-8b8a-4ce5-b253-c9a9d7ae8747" />
+	<img width="392" alt="image" src="https://github.com/user-attachments/assets/0caa60f7-a4d8-4a67-ada5-3337ce07bf99" />
 
 - "GPS F3X Tracker" widget configuration:
 	- Start race switch: any 2-position switch or functional switch, mandatory
@@ -90,7 +90,7 @@ Note: not needed other telemetry values should be disabled in Ethos to speed up 
  	- Flight correction factor: defines value for correction of flight position
 	- Input debug GPS latitude and longitude: used for emulation of GPS input in debug mode  (suggested analog sources elevator and rudder), not mandatory
 
-<img width="392" alt="image" src="https://github.com/user-attachments/assets/55c52fea-8c32-47ae-b0e8-5207a29d9f6b" />
+	<img width="392" alt="image" src="https://github.com/user-attachments/assets/55c52fea-8c32-47ae-b0e8-5207a29d9f6b" />
 
 <a name="Locations.lua"></a>
 ## 6. Locations.lua
@@ -150,13 +150,17 @@ The actual status is indicated by individual rows in the "GPS F3X Tracker" widge
 - GPS: actual GPS position
 - Runs: list of last events of the same type with their runtime
 
-<img width="194" alt="image" src="https://github.com/user-attachments/assets/3776fb41-35f4-4898-bc3e-7f8eeed1ecbd" />
+	<img width="194" alt="image" src="https://github.com/user-attachments/assets/3776fb41-35f4-4898-bc3e-7f8eeed1ecbd" />
+
 
 Announcements and sounds: 
-- Beep after switching the "Start race switch" on
+- Beep after switching the "Start race switch" on (600 Hz)
 - Initial F3F timer countdown announcements: 30, 20, 10, 5, 4, 3, 2, 1 sec
 - F3B-distance timer countdown announcements: minutes and every 10 sec for last minute
 - Beeps when crossing base, tone based on condition
+	- first base crossing from inside the course to outside in the competition mode (800 Hz)
+	- first base A crossing from outside the course to inside in the competition or training mode (1000 Hz)
+	- any other base crossing from inside to outside in the competition or training mode (1200 Hz)
 - Lap time announcements on even laps for F3F-traning event type
 - Overall runtime at event end for F3F-x event types
 
@@ -185,7 +189,7 @@ Announcements and sounds:
 - Go to the "GPS F3X Tracker" widget screen
 	- The initial status is indicated by statement "waiting for start..." 
 
-<img width="194" alt="image" src="https://github.com/user-attachments/assets/b536919a-1589-4a6b-ac70-20bf087a35c7" />
+		<img width="194" alt="image" src="https://github.com/user-attachments/assets/b536919a-1589-4a6b-ac70-20bf087a35c7" />
 
 - Start new event with the "Start race switch"
 
@@ -225,7 +229,7 @@ You can set the Flight correction factor manually or you can set its best value 
 - There is new configuration item of type Source "Flight correction factor management". If it isn’t configured, it is possible to change the configuration item "Flight correction factor" manually, otherwise the item "Flight correction factor" is managed by the configured source
 - Value of the item "Flight correction factor management" must be in range 0-50%, I advise to create a Var, e.g.:
 
-<img width="393" alt="image" src="https://github.com/user-attachments/assets/5b9366b1-de47-44a1-8c0d-a8e72fdd5364" />
+	<img width="393" alt="image" src="https://github.com/user-attachments/assets/5b9366b1-de47-44a1-8c0d-a8e72fdd5364" />
 
 - Change of value is in the Tracker accepted only during status "waiting for start...". However value of the source can be changed anytime and the Tracker will accept it when goes again into the status "waiting for start..."!
 - Change of value is announced by voice, be patient as Ethos chains voice messages
