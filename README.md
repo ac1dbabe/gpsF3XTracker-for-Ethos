@@ -135,8 +135,8 @@ Note: deletion of site lines in the Locations table is possible only via PC
 <a name="Eventmodes"></a>
 ## 7. Event modes
 The application supports F3F-competition, F3F-training, F3F-debug, F3B-speed and F3B-distance event types. They behave differently as below:
-- F3F-competition: it follows F3F rules, so it begins with 30 sec timer and starts the run timer when the plane enters the competition place from outside via base A toward base B for the fist time or when the initial timer expires. It then measures time for 10 laps between bases
-- F3F-training: it does not use the 30 sec and starts directly with entering the competition place from outside via base A toward base B for the fist time
+- F3F-competition: it follows F3F rules, so it begins with 30 sec timer and starts the run timer when the plane enters the competition place from outside via base A toward base B for the fist time or when the initial timer expires. It then measures time for 10 laps between bases. Start in this mode is expected to be inside of the course, first crossing of a base from inside the course to outside is indicated by beep
+- F3F-training: it does not use the 30 sec and begins directly with entering the competition place from outside via base A toward base B for the fist time. Start in this mode can be inside or outside of the course, potential first crossing of a base from inside the course to outside is not indicated by beep
 - F3F-debug: similar to F3F-training, however it uses emulation of GPS input (via configured sources "Input debug GPS latitude and longitude") for simulation of flight around the set home position
 - F3B-speed: at this moment only measures time for 4 laps since entering the competition place from outside via base A toward base B for the fist time. No check for the overall competition time is implemented
 - F3B-distance: it measures number of laps made in 4 minutes since entering the competition place from outside via base A toward base B for the fist time 
