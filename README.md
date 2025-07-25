@@ -30,7 +30,7 @@ This manual describes how to install, configure and use the GPS F3X Tracker.
 
 <a name="Requirements"></a>
 ## 2. Requirements
-- GPS sensor: RCGPS-F3x (contact the producer via mail gigijoe@cassini.vision or FB https://www.facebook.com/steve.chang.7796), SM-Modelbau GPS-Logger 3 (GPS-Logger 3 - SM-Modellbau | RC Telemetrie Sensoren), FrSky GPS ADV and generally any other GPS with data rate 10Hz are supported. We recommend RCGPS-F3x as it was designed for F3F and fully fits to the GPS F3X Tracker
+- GPS sensor: RCGPS-F3x/RCGPS-F3x-Slim (https://www.cassini.vision/), SM-Modelbau GPS-Logger 3 (https://www.sm-modellbau.de/GPS-Logger-3), FrSky GPS ADV and generally any other GPS with data rate 10Hz are supported. We recommend RCGPS-F3x as it was designed for F3F and fully fits to the GPS F3X Tracker
 - Ethos: versions 1.6.2 and newer are supported (previous versions have various issues in areas used by the application)
 - Transmitter: The application supports units with touchscreen resolution 800*480
 
