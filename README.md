@@ -1,6 +1,6 @@
 This is a fork. Here are the changes I've made:
 
-1. Fixed unreadable text when dark mode is enabled
+1. Fixed unreadable text when dark mode is disabled
 2. Source code is now tracked in the repository (pulled it from the *releases* section in the original repo)
 
 You'll need to compile all the lua files to .luac, EXCEPT for locations.lua
